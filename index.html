@@ -21,13 +21,28 @@
 
 <!--Calling the geojson data from the data folder to populate on the map.-->
 <script>
-	// L.geoJSON(facebook, {
-	// 	style : function(feature) {
-	// 		return {
-	// 			color: '#0000',
-	// 		}
-	// 	}
-	// }).addTo(map);
+	L.geoJSON(facebook, {
+		style : function(feature) {
+			return {
+				color: '#0000',
+			}
+		},
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			let popupContent = "Name of Place" + feature.properties;
+				layer.bindPopup(popupContent);
+		}
+	}).addTo(map);
 </script>
 </body>
 </html>
