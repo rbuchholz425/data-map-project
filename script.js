@@ -31,18 +31,32 @@ let fbIcon2 = L.icon({
 
 let popup = L.popup();
 
-L.marker([35.08, -106.65], {icon:fbIcon}).addTo(map)
-	.bindPopup("Facebook User ABQ");
+// L.marker([35.08, -106.65], {icon:fbIcon}).addTo(map)
+// 	.bindPopup("Facebook User ABQ");
 
 //GeoJSON Sample code:
 
-let geojson = {"type": "FeatureCollection","features": [{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [-106.71295166015625,35.24449753934067]}},
-		{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [-106.62506103515625,35.13900214724948]}},
-		{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [-106.49322509765624,35.185032937998294]}},
-		{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [-106.62643432617186,35.108674964507586]}},
-		{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [-106.80084228515625,35.146862906756304]}},
-		{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [-106.6168212890625,35.05698043137265]}},
-		{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [-106.57562255859375,35.40136418330354]}}]};
+// let geojson = {"type": "FeatureCollection","features": [{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [-106.71295166015625,35.24449753934067]}},
+// 		{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [-106.62506103515625,35.13900214724948]}},
+// 		{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [-106.49322509765624,35.185032937998294]}},
+// 		{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [-106.62643432617186,35.108674964507586]}},
+// 		{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [-106.80084228515625,35.146862906756304]}},
+// 		{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [-106.6168212890625,35.05698043137265]}},
+// 		{"type": "Feature","properties": {},"geometry": {"type": "Point","coordinates": [-106.57562255859375,35.40136418330354]}}]};
+
+// let markers = L.markerClusterGroup();
+//
+// for (let i = 0; i < geojson.length; i++) {
+// 	let a = geojson[i];
+// 	let title = a[2];
+// 	let marker = L.marker(new L.LatLng(a[0], a[1]), {
+// 		title: title
+// 	});
+// 	marker.bindPopup(title);
+// 	markers.addLayer(marker);
+// }
+//
+// map.addLayer(markers);
 
 //Formatting the geojson code below:
 //Styles each point marked.
@@ -76,3 +90,4 @@ let featureGroup = L.featureGroup({geojson}).addTo(map);
 map.fitBounds(featureGroup.getBounds(), {
 	padding: [100,100]
 });
+
