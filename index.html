@@ -27,31 +27,83 @@
 
 <!--Calling the geojson data from the data folder to populate on the map.-->
 <script>
-	L.geoJSON(facebook, {
-		style : function(feature) {
-			return {
-				color: '#0000',
-			}
-		},
-		//Adds the fb icon as the marker for each point.
-		pointToLayer: function(geoJsonPoint, latlng) {
-			return L.marker(latlng, {
-				icon: fbIcon
-			}).on('mousemove', function(e) {
-				e.target.setIcon(fbIcon2);
-			}).on('mouseout', function(e) {
-				e.target.setIcon(fbIcon);
-			});
-		},
-		//Adds popups for each of the points.
-		onEachFeature: function(feature, layer) {
-			layer.bindPopup(
-				'<h3>'+feature.properties.name+'</h3>' +
-				'<p><strong>Category: </strong>'+feature.properties.category+'</p>' +
-				'<p><strong>Checkins: </strong>'+feature.properties.checkins+'</p>'
-			);
-		}
+
+	//Leaflet map code is shown below:
+
+	let map = L.map('map').setView([35.15, -106.60], 12);
+
+	L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=JEpA1SZ9bmeYReFjx7Bg', {
+		tileSize: 512,
+		zoomOffset: -1,
+		minZoom: 3,
+		noWrap: true,
+		attribution: '<a href="https://www.maptiler.com/copyright/" target="_blank">&copy;' +
+			' MapTiler</a> <a href="https://www.openstreetmap.org/copyright"' +
+			' target="_blank">&copy; OpenStreetMap contributors</a>',
+		crossOrigin: true
 	}).addTo(map);
+
+	// Icon set up for the facebook user data
+	let fbIcon = L.icon({
+		iconUrl: 'img/facebook.svg',
+		iconSize:     [32, 37], // size of the icon
+		iconAnchor:   [16, 37], // point of the icon which will correspond to marker's location
+		popupAnchor:  [0, -30] // point from which the popup should open relative to the iconAnchor
+	});
+
+	let fbIcon2 = L.icon({
+		iconUrl: 'img/facebook2.svg',
+		iconSize:     [32, 37], // size of the icon
+		iconAnchor:   [16, 37], // point of the icon which will correspond to marker's location
+		popupAnchor:  [0, -30] // point from which the popup should open relative to the iconAnchor
+	});
+
+	// let markerClusters = L.markerClusterGroup();
+	//
+	// for ( let i = 0; i < facebook.length; ++i ) {
+	// 	let popup = facebook[i].name +
+	// 		'<br/>' + facebook[i].category +
+	// 		'<br/><b>hello</b> ' + facebook[i].checkins;
+	//
+	// 	let m = L.marker( [facebook[i].lat, facebook[i].lng], {icon: fbIcon} )
+	// 		.bindPopup( popup );
+	//
+	// 	markerClusters.addLayer( m );
+		L.geoJSON(facebook, {
+			style: function(feature) {
+				return {
+					color: '#0000',
+				}
+			},
+			//Adds the fb icon as the marker for each point.
+			pointToLayer: function(geoJsonPoint, latlng) {
+				return L.marker(latlng, {
+					icon: fbIcon
+				}).on('mousemove', function(e) {
+					e.target.setIcon(fbIcon2);
+				}).on('mouseout', function(e) {
+					e.target.setIcon(fbIcon);
+				});
+			},
+			//Adds popups for each of the points.
+			onEachFeature: function(feature, layer) {
+				layer.bindPopup(
+					'<h3>' + feature.properties.name + '</h3>' +
+					'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+					'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+				);
+			}
+		}).addTo(map);
+	// }
+
+	// map.addLayer( markerClusters );
+
+	let featureGroup = L.featureGroup({facebook}).addTo(map);
+
+	//Bounds for the map to pull up with the data centered on it.
+	map.fitBounds(featureGroup.getBounds(), {
+		padding: [100,100]
+	});
 </script>
 </body>
 </html>
