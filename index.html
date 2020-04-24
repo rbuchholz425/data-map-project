@@ -38,10 +38,12 @@
 		<div class="navbar-nav">
 			<div class="dropdown">
 				<button class="btn btn-secondary dropdown-toggle bg-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Business Category
+					Select Category
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-					<a class="dropdown-item" id="toggleLayer" href="#">Action</a>
+					<a class="dropdown-item" id="toggleLayer" href="#">All Industries</a>
+					<a class="dropdown-item" id="toggleArtLayer" href="#">Art</a>
+					<a class="dropdown-item" id="toggleBarLayer" href="#">Bars</a>
 				</div>
 			</div>
 		</div>
@@ -109,12 +111,7 @@
 		popupAnchor:  [0, -30] // point from which the popup should open relative to the iconAnchor
 	});
 
-		var face = L.geoJSON(org, {
-			style: function(feature) {
-				return {
-					color: '#0000',
-				}
-			},
+		let face = L.geoJSON(facebook, {
 			//Adds the fb icon as the marker for each point.
 			pointToLayer: function(geoJsonPoint, latlng) {
 				return L.marker(latlng, {
@@ -133,9 +130,51 @@
 					'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
 				);
 			}
-		}).addTo(map);
-	// }
+		});
 
+//markers for the art category:
+	let artButton = L.geoJSON(art, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
+
+	//markers for the bar category:
+	let barButton = L.geoJSON(bar, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
 
 
 	$(document).on('click', '#toggleLayer', function() {

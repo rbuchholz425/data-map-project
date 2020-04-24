@@ -19,3 +19,19 @@ $('#toggleLayer').click(function(){
 	}
 });
 
+$('#toggleArtLayer').click(function(){
+	if(map.hasLayer(artButton)){
+		map.removeLayer(artButton);
+	} else {
+		map.addLayer(artButton);
+	}
+});
+
+$('#toggleBarLayer').click(function(){
+	if(map.hasLayer(barButton)){
+		map.removeLayer(barButton);
+	} else {
+		map.addLayer(barButton);
+	}
+});
+
