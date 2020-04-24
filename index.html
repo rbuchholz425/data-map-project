@@ -1,16 +1,16 @@
 <!--HTML code for ABQ map data:-->
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 	<title>ABQ Map Data</title>
 	<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
-<!--	Some bootstrap libraries for nav bar-->
+<!--	bootstrap libraries for nav bar-->
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-<!--	all leaflet libraries and styles are added below-->
+<!--	leaflet libraries and styles are added below-->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.3.1/leaflet.css" />
 	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.css" />
 	<link rel="stylesheet" type="text/css" href="http://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/0.4.0/MarkerCluster.Default.css" />
@@ -37,16 +37,16 @@
 	<div class="collapse navbar-collapse flex-row-reverse" id="navbarNavAltMarkup">
 		<div class="navbar-nav">
 			<a data-toggle="tooltip" id="tooltip"
-				title="This map shows top Facebook's popular checkin spots in Albuquerque. Select a category to filter by industry.">
+				title="This map shows top Facebook checkin spots in Albuquerque. Select a category to filter by industry.">
 				<img src="img/info.svg" alt="info" id="info">
 			</a>
-			<div class="dropdown mr-2">
+			<div class="dropdown" id="nav-dropdown">
 				<button class="btn btn-secondary dropdown-toggle bg-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-					Select Category
+					<span id="selected">Select Category</span><span class="caret"></span>
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 					<a class="dropdown-item" id="toggleLayer" href="#">All Industries</a>
-					<a class="dropdown-item" id="toggleTwentyLayer" href="#">Top 20</a>
+					<a class="dropdown-item" id="toggleTwentyLayer" href="#">Top 20 Spots</a>
 					<a class="dropdown-item" id="toggleArtLayer" href="#">Art</a>
 					<a class="dropdown-item" id="toggleCarLayer" href="#">Automotive</a>
 					<a class="dropdown-item" id="toggleBarLayer" href="#">Bars</a>
@@ -72,6 +72,12 @@
 <script>
 	$(document).ready(function(){
 		$('[data-toggle="tooltip"]').tooltip();
+	});
+</script>
+
+<script>
+	$('.dropdown-menu a').click(function(){
+		$('#selected').text($(this).text());
 	});
 </script>
 
@@ -466,7 +472,7 @@
 		}
 	});
 
-	//markers for the todo category:
+	//markers for the to-do category:
 	let todoButton = L.geoJSON(todo, {
 		//Adds the fb icon as the marker for each point.
 		pointToLayer: function(geoJsonPoint, latlng) {
@@ -510,16 +516,8 @@
 		}
 	});
 
-	$(document).on('click', '#toggleLayer', function() {
-		if(map.hasLayer(featureGroup)) {
-			map.removeLayer(featureGroup);
-		} else {
-			featureGroup.addTo(map);
-		}
-	});
-
 	//Bounds for the map to pull up with the data centered on it.
-	map.fitBounds(featureGroup.getBounds(), {
+	map.fitBounds(facebook.getBounds(), {
 		padding: [100,100]
 	});
 </script>

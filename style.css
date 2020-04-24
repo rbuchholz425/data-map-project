@@ -1,5 +1,4 @@
 /*CSS for ABQ Map Data*/
-
  html, body, #map {
 	 height: 100%;
 	 width: 100%;
@@ -26,4 +25,8 @@
 #info {
 	width: 2vw;
 	float: left;
+}
+
+#nav-dropdown {
+	margin-right: 5rem;
 }
