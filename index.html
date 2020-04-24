@@ -36,7 +36,14 @@
 	</button>
 	<div class="collapse navbar-collapse flex-row-reverse" id="navbarNavAltMarkup">
 		<div class="navbar-nav">
-			<button class="nav-link nav-item active" id="toggleLayer" >Toggle</button>
+			<div class="dropdown">
+				<button class="btn btn-secondary dropdown-toggle bg-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+					Business Category
+				</button>
+				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+					<a class="dropdown-item" id="toggleLayer" href="#">Action</a>
+				</div>
+			</div>
 		</div>
 	</div>
 </nav>
@@ -45,14 +52,36 @@
 <div id="map"></div>
 <p><a href="https://www.maptiler.com/copyright/" target="_blank">&copy; MapTiler</a> <a href="https://www.openstreetmap.org/copyright" target="_blank">&copy; OpenStreetMap contributors</a></p>
 <script rel="script" src="script.js"></script>
+
+<!--Adding all different data sets below:-->
 <script src="data/facebook-abq.js"></script>
+<script src="data/art-abq.js"></script>
+<script src="data/bar-abq.js"></script>
+<script src="data/car-abq.js"></script>
+<script src="data/care-abq.js"></script>
+<script src="data/church-abq.js"></script>
+<script src="data/food-abq.js"></script>
+<script src="data/gov-abq.js"></script>
+<script src="data/health-abq.js"></script>
+<script src="data/hotel-abq.js"></script>
+<script src="data/local-abq.js"></script>
+<script src="data/org-abq.js"></script>
+<script src="data/school-abq.js"></script>
+<script src="data/shop-abq.js"></script>
+<script src="data/sport-abq.js"></script>
+<script src="data/todo-abq.js"></script>
 
 <!--Calling the geojson data from the data folder to populate on the map.-->
 <script>
 
 	//Leaflet map code is shown below:
 
-	let map = L.map('map').setView([35.15, -106.60], 12);
+	let map = L.map('map', { zoomControl:false }).setView([35.15, -106.60], 12);
+
+	//add zoom control to a new position
+	L.control.zoom({
+		position:'bottomright'
+	}).addTo(map);
 
 	L.tileLayer('https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=JEpA1SZ9bmeYReFjx7Bg', {
 		tileSize: 512,
@@ -80,23 +109,7 @@
 		popupAnchor:  [0, -30] // point from which the popup should open relative to the iconAnchor
 	});
 
-	//One of many attempts at getting clustering to work correctly.
-
-	// let markerClusters = L.markerClusterGroup();
-	//
-	// for ( let i = 0; i < facebook.length; ++i ) {
-	// 	let popup = facebook[i].name +
-	// 		'<br/>' + facebook[i].category +
-	// 		'<br/><b>hello</b> ' + facebook[i].checkins;
-	//
-	// 	let m = L.marker( [facebook[i].lat, facebook[i].lng], {icon: fbIcon} )
-	// 		.bindPopup( popup );
-	//
-	// 	markerClusters.addLayer( m );
-	//
-	// map.addLayer( markerClusters );
-
-		var face = L.geoJSON(facebook, {
+		var face = L.geoJSON(org, {
 			style: function(feature) {
 				return {
 					color: '#0000',
@@ -123,7 +136,7 @@
 		}).addTo(map);
 	// }
 
-	let featureGroup = L.featureGroup({facebook}).addTo(map);
+
 
 	$(document).on('click', '#toggleLayer', function() {
 		if(map.hasLayer(featureGroup)) {
