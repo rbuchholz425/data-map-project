@@ -28,7 +28,7 @@
 	<a class="navbar-brand">
 		<img src="img/nm.png" alt="NM" id="zia">
 			 <strong>
-				 ABQ Social Popularity
+				 ABQ Top Checkin Spots
 			 </strong>
 	</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -36,19 +36,44 @@
 	</button>
 	<div class="collapse navbar-collapse flex-row-reverse" id="navbarNavAltMarkup">
 		<div class="navbar-nav">
-			<div class="dropdown">
+			<a data-toggle="tooltip" id="tooltip"
+				title="This map shows top Facebook's popular checkin spots in Albuquerque. Select a category to filter by industry.">
+				<img src="img/info.svg" alt="info" id="info">
+			</a>
+			<div class="dropdown mr-2">
 				<button class="btn btn-secondary dropdown-toggle bg-dark" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 					Select Category
 				</button>
 				<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
 					<a class="dropdown-item" id="toggleLayer" href="#">All Industries</a>
+					<a class="dropdown-item" id="toggleTwentyLayer" href="#">Top 20</a>
 					<a class="dropdown-item" id="toggleArtLayer" href="#">Art</a>
+					<a class="dropdown-item" id="toggleCarLayer" href="#">Automotive</a>
 					<a class="dropdown-item" id="toggleBarLayer" href="#">Bars</a>
+					<a class="dropdown-item" id="toggleSchoolLayer" href="#">Education</a>
+					<a class="dropdown-item" id="toggleFoodLayer" href="#">Food/Restaurants</a>
+					<a class="dropdown-item" id="toggleGovLayer" href="#">Government</a>
+					<a class="dropdown-item" id="toggleHealthLayer" href="#">Health/Medical</a>
+					<a class="dropdown-item" id="toggleHotelLayer" href="#">Hotels</a>
+					<a class="dropdown-item" id="toggleLocalLayer" href="#">Local Business</a>
+					<a class="dropdown-item" id="toggleOrgLayer" href="#">Organizations</a>
+					<a class="dropdown-item" id="toggleCareLayer" href="#">Personal Care</a>
+					<a class="dropdown-item" id="toggleTodoLayer" href="#">Places of Interest</a>
+					<a class="dropdown-item" id="toggleChurchLayer" href="#">Religious Sites</a>
+					<a class="dropdown-item" id="toggleShopLayer" href="#">Shopping</a>
+					<a class="dropdown-item" id="toggleSportLayer" href="#">Sports/Outdoors</a>
 				</div>
 			</div>
 		</div>
 	</div>
 </nav>
+
+<!--this enables the tooltip to work and show information.-->
+<script>
+	$(document).ready(function(){
+		$('[data-toggle="tooltip"]').tooltip();
+	});
+</script>
 
 <!--creating the map div below and adding the author credit.-->
 <div id="map"></div>
@@ -72,6 +97,7 @@
 <script src="data/shop-abq.js"></script>
 <script src="data/sport-abq.js"></script>
 <script src="data/todo-abq.js"></script>
+<script src="data/top-20-abq.js"></script>
 
 <!--Calling the geojson data from the data folder to populate on the map.-->
 <script>
@@ -111,7 +137,7 @@
 		popupAnchor:  [0, -30] // point from which the popup should open relative to the iconAnchor
 	});
 
-		let face = L.geoJSON(facebook, {
+		let allButton = L.geoJSON(facebook, {
 			//Adds the fb icon as the marker for each point.
 			pointToLayer: function(geoJsonPoint, latlng) {
 				return L.marker(latlng, {
@@ -176,6 +202,313 @@
 		}
 	});
 
+	//markers for the car category:
+	let carButton = L.geoJSON(car, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
+
+	//markers for the care category:
+	let careButton = L.geoJSON(care, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
+
+	//markers for the church category:
+	let churchButton = L.geoJSON(church, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
+
+	//markers for the food category:
+	let foodButton = L.geoJSON(food, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
+
+	//markers for the gov category:
+	let govButton = L.geoJSON(gov, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
+
+	//markers for the health category:
+	let healthButton = L.geoJSON(health, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
+
+	//markers for the hotel category:
+	let hotelButton = L.geoJSON(hotel, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
+
+	//markers for the local category:
+	let localButton = L.geoJSON(local, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
+
+	//markers for the org category:
+	let orgButton = L.geoJSON(org, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
+
+	//markers for the school category:
+	let schoolButton = L.geoJSON(school, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
+
+	//markers for the shop category:
+	let shopButton = L.geoJSON(shop, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
+
+	//markers for the sport category:
+	let sportButton = L.geoJSON(sport, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
+
+	//markers for the todo category:
+	let todoButton = L.geoJSON(todo, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
+
+	//markers for the top 20 category:
+	let twentyButton = L.geoJSON(twenty, {
+		//Adds the fb icon as the marker for each point.
+		pointToLayer: function(geoJsonPoint, latlng) {
+			return L.marker(latlng, {
+				icon: fbIcon
+			}).on('mousemove', function(e) {
+				e.target.setIcon(fbIcon2);
+			}).on('mouseout', function(e) {
+				e.target.setIcon(fbIcon);
+			});
+		},
+		//Adds popups for each of the points.
+		onEachFeature: function(feature, layer) {
+			layer.bindPopup(
+				'<h3>' + feature.properties.name + '</h3>' +
+				'<p><strong>Category: </strong>' + feature.properties.category + '</p>' +
+				'<p><strong>Checkins: </strong>' + feature.properties.checkins + '</p>'
+			);
+		}
+	});
 
 	$(document).on('click', '#toggleLayer', function() {
 		if(map.hasLayer(featureGroup)) {

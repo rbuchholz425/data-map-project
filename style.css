@@ -5,10 +5,25 @@
 	 width: 100%;
  }
 
+/*main map on page*/
 #map {
 	position: absolute; top: 0; right: 0; bottom: 0; left: 0;
 }
 
+/*zia icon in navbar*/
 #zia {
 	width: 3vw;
+}
+
+/* Tooltip */
+#tooltip {
+	color: #FFFFFF;
+	padding-right: 2rem;
+	font-size: 20px;
+}
+
+/*tooltip icon*/
+#info {
+	width: 2vw;
+	float: left;
 }
